@@ -8,6 +8,8 @@ add_library(solanaceae_util
 
 	./solanaceae/util/simple_config_model.hpp
 	./solanaceae/util/simple_config_model.cpp
+
+	./solanaceae/util/event_provider.hpp
 )
 
 target_include_directories(solanaceae_util PUBLIC .)
