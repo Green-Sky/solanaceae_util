@@ -12,6 +12,6 @@ add_library(solanaceae_util
 
 target_include_directories(solanaceae_util PUBLIC .)
 target_compile_features(solanaceae_util PUBLIC cxx_std_17)
-#target_link_libraries(solanaceae_contact PUBLIC
+#target_link_libraries(solanaceae_util PUBLIC
 #)
 
