@@ -6,14 +6,14 @@
 #include <type_traits>
 #include <cassert>
 
-struct CM_InternalStringView {
+struct CM_InternalStringView final {
 	const char* start {nullptr};
 	uint64_t extend {0};
 
 	// conversion helpers
 	CM_InternalStringView(const std::string_view sv) : start(sv.data()), extend(sv.size()) {}
 	template<std::size_t N>
-	CM_InternalStringView(const char (&str)[N]) : start(str), extend(N) {}
+	CM_InternalStringView(const char (&str)[N]) : start(str), extend(N-1u) {}
 	CM_InternalStringView(const std::string& str) : start(str.data()), extend(str.size()) {}
 	operator std::string() { return {start, start+extend}; }
 	operator std::string_view() { return {start, extend}; }
