@@ -42,13 +42,18 @@ struct ConfigModelI {
 	// actual range cant be virtual
 	template<typename Type>
 	struct ConstEntryProxy {
+		struct Pair {
+			std::string key;
+			Type value;
+		};
+
 		struct ConstEntryIteratorI {
 			virtual ~ConstEntryIteratorI(void) {}
 			virtual std::unique_ptr<ConstEntryIteratorI> clone(void) = 0;
 			virtual bool equal(const ConstEntryIteratorI& other) const = 0;
 			virtual void incrementOne(void) = 0;
 			//virtual const Type& getValue(void) const = 0;
-			virtual Type getValue(void) const = 0;
+			virtual Pair getValue(void) const = 0;
 		};
 
 		// actual iterator cant be virtual
@@ -69,7 +74,7 @@ struct ConfigModelI {
 			bool operator==(const ConstEntryIterator& other) const { return _value->equal(*other._value); }
 			bool operator!=(const ConstEntryIterator& other) const { return !operator==(other); }
 			ConstEntryIterator& operator++(void) { _value->incrementOne(); return *this; }
-			Type operator*(void) const { return _value->getValue(); }
+			Pair operator*(void) const { return _value->getValue(); }
 		};
 
 		ConstEntryIterator _begin;

@@ -42,6 +42,7 @@ struct SimpleConfigModel : public ConfigModelI {
 	// iteration
 	template<typename Type, typename RealType = Type>
 	struct SimpleConstEntryIteratorImpl : public ConfigModelI::ConstEntryProxy<Type>::ConstEntryIteratorI {
+		using BaseType = typename ConfigModelI::ConstEntryProxy<Type>;
 		using BaseIteratorIType = typename ConfigModelI::ConstEntryProxy<Type>::ConstEntryIteratorI;
 		using MapType = std::map<std::string, RealType>;
 		using MapTypeIterator = typename MapType::const_iterator;
@@ -55,7 +56,7 @@ struct SimpleConfigModel : public ConfigModelI {
 		std::unique_ptr<BaseIteratorIType> clone(void) override { return std::make_unique<SimpleConstEntryIteratorImpl>(_self); }
 		bool equal(const BaseIteratorIType& other) const override { return _self == static_cast<const SimpleConstEntryIteratorImpl&>(other)._self; }
 		void incrementOne(void) override { ++_self; }
-		Type getValue(void) const override { return _self->second; }
+		typename BaseType::Pair getValue(void) const override { return {_self->first, _self->second}; }
 
 		// helper
 		static ConfigModelI::ConstEntryProxy<Type> createRange(const MapTypeIterator& begin, const MapTypeIterator& end) {
