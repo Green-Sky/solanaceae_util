@@ -118,6 +118,69 @@ CM_InternalOptional<CM_ISV> SimpleConfigModel::get_string(CM_ISV module, CM_ISV 
 	}
 }
 
+// iteration
+
+// level 3
+ConfigModelI::ConstEntryProxy<bool> SimpleConfigModel::entries_bool(CM_ISV module, CM_ISV category) const {
+	using Type = bool;
+	using RealType = Type;
+	static std::map<std::string, RealType> g_empty_map;
+	auto& map = _map_bool;
+	if (map.count(module) && map.at(module).count(category)) {
+		const auto& tmp_map = map.at(module).at(category).second;
+		return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(
+			tmp_map.cbegin(),
+			tmp_map.cend()
+		);
+	}
+	return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(g_empty_map.cbegin(), g_empty_map.cend());
+}
+
+ConfigModelI::ConstEntryProxy<int64_t> SimpleConfigModel::entries_int(CM_ISV module, CM_ISV category) const {
+	using Type = int64_t;
+	using RealType = Type;
+	static std::map<std::string, RealType> g_empty_map;
+	auto& map = _map_int;
+	if (map.count(module) && map.at(module).count(category)) {
+		const auto& tmp_map = map.at(module).at(category).second;
+		return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(
+			tmp_map.cbegin(),
+			tmp_map.cend()
+		);
+	}
+	return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(g_empty_map.cbegin(), g_empty_map.cend());
+}
+
+ConfigModelI::ConstEntryProxy<double> SimpleConfigModel::entries_double(CM_ISV module, CM_ISV category) const {
+	using Type = double;
+	using RealType = Type;
+	static std::map<std::string, RealType> g_empty_map;
+	auto& map = _map_double;
+	if (map.count(module) && map.at(module).count(category)) {
+		const auto& tmp_map = map.at(module).at(category).second;
+		return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(
+			tmp_map.cbegin(),
+			tmp_map.cend()
+		);
+	}
+	return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(g_empty_map.cbegin(), g_empty_map.cend());
+}
+
+ConfigModelI::ConstEntryProxy<CM_ISV> SimpleConfigModel::entries_string(CM_ISV module, CM_ISV category) const {
+	using Type = CM_ISV;
+	using RealType = std::string;
+	static std::map<std::string, RealType> g_empty_map;
+	auto& map = _map_string;
+	if (map.count(module) && map.at(module).count(category)) {
+		const auto& tmp_map = map.at(module).at(category).second;
+		return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(
+			tmp_map.cbegin(),
+			tmp_map.cend()
+		);
+	}
+	return SimpleConstEntryIteratorImpl<Type, RealType>::createRange(g_empty_map.cbegin(), g_empty_map.cend());
+}
+
 void SimpleConfigModel::dump(void) {
 	std::cout << "SCM dump:\n";
 	for (const auto& [k_m, v_c] : _map_bool) {

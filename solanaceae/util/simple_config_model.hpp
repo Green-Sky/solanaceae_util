@@ -39,6 +39,39 @@ struct SimpleConfigModel : public ConfigModelI {
 	CM_InternalOptional<double> get_double(CM_ISV module, CM_ISV category) override;
 	CM_InternalOptional<CM_ISV> get_string(CM_ISV module, CM_ISV category) override;
 
+	// iteration
+	template<typename Type, typename RealType = Type>
+	struct SimpleConstEntryIteratorImpl : public ConfigModelI::ConstEntryProxy<Type>::ConstEntryIteratorI {
+		using BaseIteratorIType = typename ConfigModelI::ConstEntryProxy<Type>::ConstEntryIteratorI;
+		using MapType = std::map<std::string, RealType>;
+		using MapTypeIterator = typename MapType::const_iterator;
+
+		MapTypeIterator _self;
+
+		SimpleConstEntryIteratorImpl(const MapTypeIterator& self) : _self(self) {}
+		SimpleConstEntryIteratorImpl(void) {}
+
+		virtual ~SimpleConstEntryIteratorImpl(void) {}
+		std::unique_ptr<BaseIteratorIType> clone(void) override { return std::make_unique<SimpleConstEntryIteratorImpl>(_self); }
+		bool equal(const BaseIteratorIType& other) const override { return _self == static_cast<const SimpleConstEntryIteratorImpl&>(other)._self; }
+		void incrementOne(void) override { ++_self; }
+		Type getValue(void) const override { return _self->second; }
+
+		// helper
+		static ConfigModelI::ConstEntryProxy<Type> createRange(const MapTypeIterator& begin, const MapTypeIterator& end) {
+			return {
+				SimpleConstEntryIteratorImpl{begin}.clone(),
+				SimpleConstEntryIteratorImpl{end}.clone()
+			};
+		}
+	};
+
+	// level 3
+	ConfigModelI::ConstEntryProxy<bool> entries_bool(CM_ISV module, CM_ISV category) const override;
+	ConfigModelI::ConstEntryProxy<int64_t> entries_int(CM_ISV module, CM_ISV category) const override;
+	ConfigModelI::ConstEntryProxy<double> entries_double(CM_ISV module, CM_ISV category) const override;
+	ConfigModelI::ConstEntryProxy<CM_ISV> entries_string(CM_ISV module, CM_ISV category) const override;
+
 	// debug
 	void dump(void);
 };
