@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project(solanaceae)
 
 add_library(solanaceae_util
+	./solanaceae/util/utils.hpp
+	./solanaceae/util/utils.cpp
+
 	./solanaceae/util/config_model.hpp
 	./solanaceae/util/config_model.inl
 
