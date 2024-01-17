@@ -6,6 +6,8 @@
 
 // TODO: events?
 struct ConfigModelI {
+	static constexpr const char* version {"2"};
+
 	~ConfigModelI(void) {}
 
 	// interface
