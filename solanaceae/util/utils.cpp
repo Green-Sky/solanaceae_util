@@ -4,12 +4,14 @@
 
 namespace detail {
 	constexpr uint8_t nib_from_hex(char c) {
-		assert((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f'));
+		assert((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
 
 		if (c >= '0' && c <= '9') {
 			return static_cast<uint8_t>(c) - '0';
 		} else if (c >= 'a' && c <= 'f') {
 			return (static_cast<uint8_t>(c) - 'a') + 10u;
+		} else if (c >= 'A' && c <= 'F') {
+			return (static_cast<uint8_t>(c) - 'A') + 10u;
 		} else {
 			return 0u;
 		}
