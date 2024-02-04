@@ -78,6 +78,38 @@ struct CM_InternalOptional {
 		}
 	}
 
+	T& value_or(T& other) {
+		if (has_value) {
+			if constexpr (std::is_same_v<T, bool>) {
+				return b;
+			} else if constexpr (std::is_same_v<T, int64_t>) {
+				return i;
+			} else if constexpr (std::is_same_v<T, double>) {
+				return d;
+			} else if constexpr (std::is_same_v<T, CM_InternalStringView>) {
+				return s;
+			}
+		} else {
+			return other;
+		}
+	}
+
+	const T& value_or(const T& other) const {
+		if (has_value) {
+			if constexpr (std::is_same_v<T, bool>) {
+				return b;
+			} else if constexpr (std::is_same_v<T, int64_t>) {
+				return i;
+			} else if constexpr (std::is_same_v<T, double>) {
+				return d;
+			} else if constexpr (std::is_same_v<T, CM_InternalStringView>) {
+				return s;
+			}
+		} else {
+			return other;
+		}
+	}
+
 	T value_or(T&& other) {
 		if (has_value) {
 			if constexpr (std::is_same_v<T, bool>) {
