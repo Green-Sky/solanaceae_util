@@ -28,6 +28,8 @@ add_library(solanaceae_file2
 	./solanaceae/file/file2.hpp
 	./solanaceae/file/file2_std.hpp
 	./solanaceae/file/file2_std.cpp
+	./solanaceae/file/file2_mem.hpp
+	./solanaceae/file/file2_mem.cpp
 )
 
 target_include_directories(solanaceae_file2 PUBLIC .)
