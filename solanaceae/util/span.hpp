@@ -39,6 +39,20 @@ struct Span final {
 		return ptr[i];
 	}
 
+	constexpr bool operator==(const Span& other) const {
+		if (empty() || size != other.size) {
+			return false;
+		}
+
+		for (uint64_t i = 0; i < size; i++) {
+			if ((*this)[i] != other[i]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 #if 0
 	constexpr T& operator[](uint64_t i) {
 		if (i > size) {
