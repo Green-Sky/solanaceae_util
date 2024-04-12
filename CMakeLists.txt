@@ -8,6 +8,9 @@ add_library(solanaceae_util
 	./solanaceae/util/utils.hpp
 	./solanaceae/util/utils.cpp
 
+	./solanaceae/util/uuid_generator.hpp
+	./solanaceae/util/uuid_generator.cpp
+
 	./solanaceae/util/config_model.hpp
 	./solanaceae/util/config_model.inl
 
