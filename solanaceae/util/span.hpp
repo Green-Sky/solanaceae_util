@@ -7,7 +7,7 @@
 
 // non owning view
 template<typename T>
-struct Span final {
+struct Span {
 	const T* ptr {nullptr};
 	uint64_t size {0};
 

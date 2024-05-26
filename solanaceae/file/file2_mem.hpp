@@ -14,7 +14,7 @@ struct File2MemW : public File2I {
 	bool isGood(void) override;
 
 	bool write(const ByteSpan data, int64_t pos = -1) override;
-	std::variant<ByteSpan, std::vector<uint8_t>> read(uint64_t size, int64_t pos = -1) override;
+	ByteSpanWithOwnership read(uint64_t size, int64_t pos = -1) override;
 };
 
 struct File2MemR : public File2I {
@@ -27,6 +27,6 @@ struct File2MemR : public File2I {
 	bool isGood(void) override;
 
 	bool write(const ByteSpan data, int64_t pos = -1) override;
-	std::variant<ByteSpan, std::vector<uint8_t>> read(uint64_t size, int64_t pos = -1) override;
+	ByteSpanWithOwnership read(uint64_t size, int64_t pos = -1) override;
 };
 

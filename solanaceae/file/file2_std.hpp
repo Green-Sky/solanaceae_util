@@ -19,7 +19,7 @@ struct File2WFile : public File2I {
 	bool isGood(void) override;
 
 	bool write(const ByteSpan data, int64_t pos = -1) override;
-	std::variant<ByteSpan, std::vector<uint8_t>> read(uint64_t size, int64_t pos = -1) override;
+	ByteSpanWithOwnership read(uint64_t size, int64_t pos = -1) override;
 };
 
 // read write, requires an existing file, file size is fixed
@@ -35,7 +35,7 @@ struct File2RWFile : public File2I {
 	bool isGood(void) override;
 
 	bool write(const ByteSpan data, int64_t pos = -1) override;
-	std::variant<ByteSpan, std::vector<uint8_t>> read(uint64_t size, int64_t pos = -1) override;
+	ByteSpanWithOwnership read(uint64_t size, int64_t pos = -1) override;
 };
 
 // cut down interface (write disabled)

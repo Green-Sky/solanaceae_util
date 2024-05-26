@@ -25,8 +25,8 @@ bool File2MemW::write(const ByteSpan data, int64_t pos) {
 	return isGood();
 }
 
-std::variant<ByteSpan, std::vector<uint8_t>> File2MemW::read(uint64_t size, int64_t pos) {
-	return {};
+ByteSpanWithOwnership File2MemW::read(uint64_t size, int64_t pos) {
+	return ByteSpan{};
 }
 
 File2MemR::File2MemR(ByteSpan mem) : File2I(false, true), _mem(mem) {
@@ -44,9 +44,9 @@ bool File2MemR::write(const ByteSpan data, int64_t pos) {
 	return false;
 }
 
-std::variant<ByteSpan, std::vector<uint8_t>> File2MemR::read(uint64_t size, int64_t pos) {
+ByteSpanWithOwnership File2MemR::read(uint64_t size, int64_t pos) {
 	if (_read_pos >= _mem.size) {
-		return {};
+		return ByteSpan{};
 	}
 
 	ByteSpan ret {
@@ -54,6 +54,7 @@ std::variant<ByteSpan, std::vector<uint8_t>> File2MemR::read(uint64_t size, int6
 		std::min(size, _mem.size - _read_pos)
 	};
 	_read_pos += ret.size;
+	// return non-owning
 	return ret;
 }
 

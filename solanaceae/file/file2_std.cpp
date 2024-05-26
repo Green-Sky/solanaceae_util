@@ -32,7 +32,6 @@ bool File2WFile::isGood(void) {
 	return _file.is_open() && _file.good();
 }
 
-	//bool write(const ByteSpan data, int64_t pos = -1) override;
 bool File2WFile::write(const ByteSpan data, int64_t pos) {
 	if (pos != -1) {
 		//std::cerr << "invalid pos\n";
@@ -49,7 +48,7 @@ bool File2WFile::write(const ByteSpan data, int64_t pos) {
 	return _file.good();
 }
 
-std::variant<ByteSpan, std::vector<uint8_t>> File2WFile::read(uint64_t, int64_t) {
+ByteSpanWithOwnership File2WFile::read(uint64_t, int64_t) {
 	return ByteSpan{};
 }
 
@@ -102,7 +101,7 @@ bool File2RWFile::write(const ByteSpan data, int64_t pos) {
 	return _file.good();
 }
 
-std::variant<ByteSpan, std::vector<uint8_t>> File2RWFile::read(uint64_t size, int64_t pos) {
+ByteSpanWithOwnership File2RWFile::read(uint64_t size, int64_t pos) {
 	if (pos >= int64_t(_file_size)) {
 		return ByteSpan{};
 	}
@@ -124,6 +123,8 @@ std::variant<ByteSpan, std::vector<uint8_t>> File2RWFile::read(uint64_t size, in
 		chunk.clear();
 	}
 
-	return chunk;
+	// return owning
+	return ByteSpanWithOwnership{std::move(chunk)};
+	//return chunk; // is this the same?
 }
 
