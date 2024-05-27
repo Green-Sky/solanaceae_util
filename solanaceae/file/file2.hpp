@@ -43,7 +43,6 @@ struct File2I {
 
 	// pos -1 means stream, append to last written, or read position (independent, like FILE*s)
 	virtual bool write(const ByteSpan data, int64_t pos = -1) = 0;
-	//[[nodiscard]] virtual std::variant<ByteSpan, std::vector<uint8_t>> read(uint64_t size, int64_t pos = -1) = 0;
 	[[nodiscard]] virtual ByteSpanWithOwnership read(uint64_t size, int64_t pos = -1) = 0;
 };
 
