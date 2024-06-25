@@ -2,8 +2,19 @@ cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
 project(solanaceae)
 
+if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+	set(SOLANACEAE_UTIL_STANDALONE ON)
+else()
+	set(SOLANACEAE_UTIL_STANDALONE OFF)
+endif()
+message("II SOLANACEAE_UTIL_STANDALONE " ${SOLANACEAE_UTIL_STANDALONE})
+
+option(SOLANACEAE_UTIL_BUILD_TESTING "Build the solanaceae_util tests" ${SOLANACEAE_UTIL_STANDALONE})
+message("II SOLANACEAE_UTIL_BUILD_TESTING " ${SOLANACEAE_UTIL_BUILD_TESTING})
+
 add_library(solanaceae_util
 	./solanaceae/util/span.hpp
+	./solanaceae/util/bitset.hpp
 
 	./solanaceae/util/utils.hpp
 	./solanaceae/util/utils.cpp
@@ -40,3 +51,11 @@ target_compile_features(solanaceae_file2 PUBLIC cxx_std_17)
 target_link_libraries(solanaceae_file2 PUBLIC
 	solanaceae_util
 )
+
+########################################
+
+if (SOLANACEAE_UTIL_BUILD_TESTING)
+	include(CTest)
+	add_subdirectory(./test)
+endif()
+
