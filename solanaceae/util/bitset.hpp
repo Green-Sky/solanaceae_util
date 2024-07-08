@@ -18,6 +18,7 @@ struct BitSet {
 	BitSet(size_t size) {
 		_bytes.resize((size+7)/8);
 	}
+	BitSet(const std::vector<uint8_t>& bytes) : _bytes(bytes) {}
 
 	BitSet& operator=(const BitSet&) = default;
 	BitSet& operator=(BitSet&&) = default;
@@ -75,6 +76,20 @@ struct BitSet {
 		return _bytes.size();
 	}
 
+	BitSet& invert(void) {
+		for (auto& c : _bytes) {
+			c = ~c;
+		}
+
+		return *this;
+	}
+
+	[[nodiscard]] BitSet invert(void) const {
+		BitSet copy = *this;
+		copy.invert();
+		return copy;
+	}
+
 	BitSet& merge(const BitSet& other) {
 		if (other.size_bytes() > size_bytes()) {
 			_bytes.resize(other.size_bytes());
@@ -85,6 +100,12 @@ struct BitSet {
 		}
 
 		return *this;
+	}
+
+	[[nodiscard]] BitSet merge(const BitSet& other) const {
+		BitSet copy = *this;
+		copy.merge(other);
+		return copy;
 	}
 
 	// start is the first bit in other relative to self
