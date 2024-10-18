@@ -19,7 +19,7 @@ struct CM_InternalStringView final {
 	CM_InternalStringView(const char (&str)[N]) : start(str), extend(N-1u) {}
 	CM_InternalStringView(const std::string& str) : start(str.data()), extend(str.size()) {}
 	operator std::string() { return {start, start+extend}; }
-	operator std::string_view() { return {start, extend}; }
+	operator std::string_view() { return {start, size_t(extend)}; }
 };
 static_assert(sizeof(CM_InternalStringView) == sizeof(const char*) + sizeof(uint64_t), "guarantee abi (hope)");
 
