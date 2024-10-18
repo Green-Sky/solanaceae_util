@@ -7,6 +7,8 @@
 #include <type_traits>
 #include <cassert>
 
+// TODO: use pack(16) instead to guarantie same size on 32bit and 64bit?
+#pragma pack(1)
 struct CM_InternalStringView final {
 	const char* start {nullptr};
 	uint64_t extend {0};
@@ -22,6 +24,7 @@ struct CM_InternalStringView final {
 static_assert(sizeof(CM_InternalStringView) == sizeof(const char*) + sizeof(uint64_t), "guarantee abi (hope)");
 
 using CM_ISV = CM_InternalStringView;
+#pragma pack() // undo pack(1)
 
 template<typename T>
 struct CM_InternalOptional {
