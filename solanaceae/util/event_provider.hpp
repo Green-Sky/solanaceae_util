@@ -22,18 +22,12 @@ struct EventProviderI {
 
 		~SubscriptionReference(void) {
 			for (const enumType et : _subs) {
-				auto& o_vec = _ep._subscribers.at(static_cast<size_t>(et));
-				for (auto o_it = o_vec.cbegin(); o_it != o_vec.cend(); o_it++) {
-					if (*o_it == _object) {
-						o_vec.erase(o_it);
-						break;
-					}
-				}
+				_ep.unsubscribe(_object, et);
 			}
 		}
 
 		SubscriptionReference& subscribe(const enumType event_type) {
-			_ep._subscribers.at(static_cast<size_t>(event_type)).push_back(_object);
+			_ep.subscribe(_object, event_type);
 			_subs.push_back(event_type);
 			return *this;
 		}
@@ -41,9 +35,18 @@ struct EventProviderI {
 
 	virtual ~EventProviderI(void) {};
 
-	// TODO: unsub
 	virtual void subscribe(EventI* object, const enumType event_type) {
 		_subscribers.at(static_cast<size_t>(event_type)).push_back(object);
+	}
+
+	virtual void unsubscribe(EventI* object, const enumType event_type) {
+		auto& o_vec = _subscribers.at(static_cast<size_t>(event_type));
+		for (auto o_it = o_vec.cbegin(); o_it != o_vec.cend(); o_it++) {
+			if (*o_it == object) {
+				o_vec.erase(o_it);
+				break;
+			}
+		}
 	}
 
 	SubscriptionReference newSubRef(EventI* object) {
