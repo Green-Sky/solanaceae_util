@@ -46,6 +46,7 @@ std::vector<uint8_t> hex2bin(const std::string_view str) {
 
 std::string bin2hex(const ByteSpan bin) {
 	std::string str;
+	str.reserve(bin.size*2);
 	for (size_t i = 0; i < bin.size; i++) {
 		str.push_back(detail::nib_to_hex(bin[i] >> 4));
 		str.push_back(detail::nib_to_hex(bin[i] & 0x0f));
