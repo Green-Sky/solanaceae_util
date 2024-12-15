@@ -68,6 +68,10 @@ struct BitSet {
 		return _bytes.data();
 	}
 
+	const uint8_t* data(void) const {
+		return _bytes.data();
+	}
+
 	size_t size_bits(void) const {
 		return _bytes.size()*8;
 	}
