@@ -19,6 +19,9 @@ add_library(solanaceae_util
 	./solanaceae/util/utils.hpp
 	./solanaceae/util/utils.cpp
 
+	./solanaceae/util/time.hpp
+	./solanaceae/util/time.cpp
+
 	./solanaceae/util/uuid_generator.hpp
 	./solanaceae/util/uuid_generator.cpp
 
