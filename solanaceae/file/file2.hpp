@@ -3,7 +3,6 @@
 #include <solanaceae/util/span.hpp>
 
 #include <vector>
-#include <variant>
 
 // TODO: move to/next-to span
 // a span that can also represent its ownership
