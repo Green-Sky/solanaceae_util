@@ -12,3 +12,14 @@ target_link_libraries(solanaceae_util_bitset_test PUBLIC
 
 add_test(NAME solanaceae_util_bitset_test COMMAND solanaceae_util_bitset_test)
 
+########################################
+
+add_executable(solanaceae_util_file_synced_test
+	./test_file_synced.cpp
+)
+
+target_link_libraries(solanaceae_util_file_synced_test PUBLIC
+	solanaceae_util
+)
+
+add_test(NAME solanaceae_util_file_synced_test COMMAND solanaceae_util_file_synced_test)

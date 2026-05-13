@@ -32,6 +32,9 @@ add_library(solanaceae_util
 	./solanaceae/util/simple_config_model.cpp
 
 	./solanaceae/util/event_provider.hpp
+
+	./solanaceae/util/file_synced.hpp
+	./solanaceae/util/file_synced.cpp
 )
 
 target_include_directories(solanaceae_util PUBLIC .)
