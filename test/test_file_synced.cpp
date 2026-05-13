@@ -17,17 +17,45 @@ int main(void) {
 
 	const std::string_view data1{"test data :)"};
 
-	const auto file_path = temp_dir/"test1.file";
+	{
+		const auto file_path = temp_dir/"test1.file";
 
-	try {
-		write_to_file_synced(file_path, reinterpret_cast<const uint8_t*>(data1.data()), data1.size());
-	} catch (const std::runtime_error& e) {
-		std::cerr << "exception thrown: " << e.what() << "\n";
-		return 1;
+		try {
+			write_to_file_synced(file_path, reinterpret_cast<const uint8_t*>(data1.data()), data1.size());
+		} catch (const std::runtime_error& e) {
+			std::cerr << "exception thrown: " << e.what() << "\n";
+			return 1;
+		}
+
+		ASSERT(std::filesystem::exists(file_path));
+		ASSERT_EQ(std::filesystem::file_size(file_path), data1.size());
+
+		// writing to same file
+		try {
+			write_to_file_synced(file_path, reinterpret_cast<const uint8_t*>(data1.data()), data1.size());
+		} catch (const std::runtime_error& e) {
+			std::cerr << "exception thrown: " << e.what() << "\n";
+			return 1;
+		}
+
+		ASSERT(std::filesystem::exists(file_path));
+		ASSERT_EQ(std::filesystem::file_size(file_path), data1.size());
 	}
 
-	ASSERT(std::filesystem::exists(file_path));
-	ASSERT_EQ(std::filesystem::file_size(file_path), data1.size());
+	{
+		const auto file_path = temp_dir/"🍅.file";
+
+		try {
+			write_to_file_synced(file_path, reinterpret_cast<const uint8_t*>(data1.data()), data1.size());
+		} catch (const std::runtime_error& e) {
+			std::cerr << "exception thrown: " << e.what() << "\n";
+			return 1;
+		}
+
+		ASSERT(std::filesystem::exists(file_path));
+		ASSERT_EQ(std::filesystem::file_size(file_path), data1.size());
+	}
+
 
 	std::filesystem::remove_all(temp_dir);
 
