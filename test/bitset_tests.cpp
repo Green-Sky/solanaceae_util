@@ -1,7 +1,6 @@
 #include <solanaceae/util/bitset.hpp>
 
 #include <cassert>
-#include <iostream>
 #include <random>
 
 int main(void) {

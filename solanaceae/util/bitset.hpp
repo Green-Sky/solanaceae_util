@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <vector>
-
+#include <limits>
 
 #include <cassert>
 
@@ -116,6 +116,9 @@ struct BitSet {
 	BitSet& merge(const BitSet& other, size_t start) {
 		// TODO: efficent implementation
 
+		if (start >= std::numeric_limits<size_t>::max() - other.size_bits()) {
+			return *this;
+		}
 		size_t need_size_bits = other.size_bits() + start;
 		if (need_size_bits > size_bits()) {
 			_bytes.resize((need_size_bits+7)/8);
