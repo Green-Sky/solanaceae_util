@@ -32,7 +32,7 @@ struct Span {
 	}
 
 	constexpr const T& operator[](uint64_t i) const {
-		if (i > size) {
+		if (i >= size) {
 			throw std::out_of_range("accessed span out of range");
 		}
 
@@ -55,7 +55,7 @@ struct Span {
 
 #if 0
 	constexpr T& operator[](uint64_t i) {
-		if (i > size) {
+		if (i >= size) {
 			throw std::out_of_range("accessed span out of range");
 		}
 

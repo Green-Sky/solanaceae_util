@@ -51,7 +51,7 @@ void write_to_file_synced(const std::filesystem::path& file_path, const uint8_t*
 
 void write_to_file_synced(const std::filesystem::path& file_path, const uint8_t* data, size_t data_size) {
 	// cant use O_DIRECT, O_SYNC has to be enough
-	const auto fd = open(file_path.generic_u8string().c_str(), O_CREAT | O_WRONLY | O_TRUNC | O_SYNC, S_IRUSR | S_IWUSR | S_IRGRP);
+	const auto fd = open(file_path.generic_u8string().c_str(), O_CREAT | O_WRONLY | O_TRUNC | O_SYNC, S_IRUSR | S_IWUSR /*| S_IRGRP*/);
 	if (fd == -1) {
 		throw std::runtime_error("file creation error: " + std::string(strerror(errno)));
 	}

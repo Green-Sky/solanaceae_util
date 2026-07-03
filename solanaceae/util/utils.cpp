@@ -1,10 +1,12 @@
 #include "./utils.hpp"
 
-#include <cassert>
+#include <stdexcept>
 
 namespace detail {
 	constexpr uint8_t nib_from_hex(char c) {
-		assert((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
+		if ((c < '0' || c > '9') && (c < 'a' || c > 'f') && (c < 'A' && c > 'F')) {
+			throw std::runtime_error("non hex char");
+		}
 
 		if (c >= '0' && c <= '9') {
 			return static_cast<uint8_t>(c) - '0';
@@ -18,7 +20,9 @@ namespace detail {
 	}
 
 	constexpr char nib_to_hex(uint8_t c) {
-		assert(c <= 0x0f);
+		if (c > 0x0f) {
+			throw std::runtime_error("not hex nibble");
+		}
 
 		if (c <= 0x09) {
 			return c + '0';
@@ -33,7 +37,10 @@ std::vector<uint8_t> hex2bin(const std::string& str) {
 }
 
 std::vector<uint8_t> hex2bin(const std::string_view str) {
-	assert(str.size() % 2 == 0); // TODO: should this be a hard assert??
+	if (str.size() % 2 != 0) {
+		throw std::runtime_error("hex not multiple of 2");
+	}
+
 	std::vector<uint8_t> bin{};
 	bin.resize(str.size()/2, 0);
 
