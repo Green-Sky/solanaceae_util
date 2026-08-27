@@ -35,6 +35,9 @@ add_library(solanaceae_util
 
 	./solanaceae/util/file_synced.hpp
 	./solanaceae/util/file_synced.cpp
+
+	./solanaceae/util/file_path_sanitizer.hpp
+	./solanaceae/util/file_path_sanitizer.cpp
 )
 
 target_include_directories(solanaceae_util PUBLIC .)
